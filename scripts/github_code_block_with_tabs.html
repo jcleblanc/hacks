@@ -1,0 +1,71 @@
+<script type="text/javascript" src="https://www.x.com/misc/jquery.js?v=1.4.4"></script>
+
+<style type="text/css">
+.codeSample{ position:relative; }
+.codeSample ul{ list-style:none; margin:0; padding:0; }
+.codeSample ul.tabs{ background-color:#585858; margin-bottom:5px; z-index:1; color:#fff; font-weight:bold; float:left; clear:both; left:1px; cursor:pointer; }
+.codeSample ul.tabs li{ width:100px; padding:5px 10px; border:1px solid #585858; }
+.codeSample ul.tabs li.active{ background-color:#F8F8FF; color:#585858; border:1px solid #DEDEDE; border-right:1px solid #F8F8FF; }
+.codeSample ul.code{ margin-left:121px; position:relative; overflow:hidden; }
+.codeSample ul.code li{ position:absolute; top:0; left:0; background-color:#fff; width:1000px; z-index:-1; }
+.codeSample ul.code li.active{ z-index:1; }
+</style>
+
+<div class="codeSample">
+    <ul class="tabs">
+        <li>php</li>
+        <li>javascript</li>
+    </ul>
+    <ul class="code">
+        <li><script src="https://gist.github.com/1761063.js?file=complete.php"></script></li>
+        <li><script src="https://gist.github.com/1476499.js?file=htaccess"></script></li>
+    </ul>
+</div>
+
+<div class="codeSample">
+    <ul class="tabs">
+        <li>php</li>
+        <li>javascript</li>
+    </ul>
+    <ul class="code">
+        <li><script src="https://gist.github.com/1476499.js?file=htaccess"></script></li>
+        <li><script src="https://gist.github.com/1761063.js?file=complete.php"></script></li>
+    </ul>
+</div>
+
+<script>
+$(function(){
+    //assign click handlers to all code tabs
+	$(".tabs li").click(function(e){
+        e.preventDefault();
+        setActive(this);
+	});
+    
+    //set first tabs & code blocks to be active
+    $(".codeSample .tabs li:nth-child(1), .codeSample .code li:nth-child(1)").addClass("active");
+    
+    //set appropriate code block height for each active code sample
+    $(".codeSample .code li:nth-child(1)").each(function(index) {
+        $(this).parent("ul").height($(this).height());
+    });
+});
+
+function setActive(tabClicked){
+    var tab = $(tabClicked);
+    var rootBlock = tab.parent("ul").parent("div");
+    var index = tab.index() + 1;
+    
+    //remove previous active declarations
+    rootBlock.find(".tabs li, .code li").removeClass("active");
+    
+    //set active tab index
+   	tab.addClass("active");
+    
+    //set active code index
+   	var codeEl = rootBlock.find(".code li:nth-child(" + index + ")");
+    codeEl.addClass("active");
+    
+    //set code block height to hide underlying samples
+    rootBlock.find(".code").height(codeEl.height());
+}
+</script>
